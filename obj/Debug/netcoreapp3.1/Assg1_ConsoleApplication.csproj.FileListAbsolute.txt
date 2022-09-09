@@ -12,3 +12,17 @@ C:\Users\KAMEN RAIDER\source\repos\Assg1_ConsoleApplication\obj\Debug\netcoreapp
 C:\Users\KAMEN RAIDER\source\repos\Assg1_ConsoleApplication\obj\Debug\netcoreapp3.1\Assg1_ConsoleApplication.dll
 C:\Users\KAMEN RAIDER\source\repos\Assg1_ConsoleApplication\obj\Debug\netcoreapp3.1\Assg1_ConsoleApplication.pdb
 C:\Users\KAMEN RAIDER\source\repos\Assg1_ConsoleApplication\obj\Debug\netcoreapp3.1\Assg1_ConsoleApplication.genruntimeconfig.cache
+D:\Code Projects\Assg1_ConsoleApplication\bin\Debug\netcoreapp3.1\Assg1_ConsoleApplication.exe
+D:\Code Projects\Assg1_ConsoleApplication\bin\Debug\netcoreapp3.1\Assg1_ConsoleApplication.deps.json
+D:\Code Projects\Assg1_ConsoleApplication\bin\Debug\netcoreapp3.1\Assg1_ConsoleApplication.runtimeconfig.json
+D:\Code Projects\Assg1_ConsoleApplication\bin\Debug\netcoreapp3.1\Assg1_ConsoleApplication.runtimeconfig.dev.json
+D:\Code Projects\Assg1_ConsoleApplication\bin\Debug\netcoreapp3.1\Assg1_ConsoleApplication.dll
+D:\Code Projects\Assg1_ConsoleApplication\bin\Debug\netcoreapp3.1\Assg1_ConsoleApplication.pdb
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\netcoreapp3.1\Assg1_ConsoleApplication.csproj.AssemblyReference.cache
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\netcoreapp3.1\Assg1_ConsoleApplication.GeneratedMSBuildEditorConfig.editorconfig
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\netcoreapp3.1\Assg1_ConsoleApplication.AssemblyInfoInputs.cache
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\netcoreapp3.1\Assg1_ConsoleApplication.AssemblyInfo.cs
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\netcoreapp3.1\Assg1_ConsoleApplication.csproj.CoreCompileInputs.cache
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\netcoreapp3.1\Assg1_ConsoleApplication.dll
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\netcoreapp3.1\Assg1_ConsoleApplication.pdb
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\netcoreapp3.1\Assg1_ConsoleApplication.genruntimeconfig.cache
