@@ -41,7 +41,7 @@ namespace Assg1_ConsoleApplication
             //clear the console, start the application
             //print out the menu view (UI)
             Console.Clear(); 
-            OutputLoginMenu(); 
+            OutputLoginMenu();
 
             //reposition cursor and read user input
 

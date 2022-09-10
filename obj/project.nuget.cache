@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "MeJYB1szID2lFZ2cc/E+55nCjBYIuSHXdpt3s0ueHBzJ7Acs9vwdu/8U0pOP4k5c91O1ZwMvzBjYtXbm6WJ8zA==",
+  "dgSpecHash": "KxMPEOPiiS2Mk/+tgdoLRAf9XxcTNIe7K6hBzF55BVCfWb619cqiHUb6IUPxckVN0AeJzBAYCQVN+eqweO5L/g==",
   "success": true,
   "projectFilePath": "D:\\Code Projects\\Assg1_ConsoleApplication\\Assg1_ConsoleApplication.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\KAMEN RAIDER\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\KAMEN RAIDER\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
+    "C:\\Users\\KAMEN RAIDER\\.nuget\\packages\\microsoft.office.interop.word\\15.0.4797.1004\\microsoft.office.interop.word.15.0.4797.1004.nupkg.sha512",
     "C:\\Users\\KAMEN RAIDER\\.nuget\\packages\\system.collections.nongeneric\\4.3.0\\system.collections.nongeneric.4.3.0.nupkg.sha512",
     "C:\\Users\\KAMEN RAIDER\\.nuget\\packages\\system.diagnostics.debug\\4.3.0\\system.diagnostics.debug.4.3.0.nupkg.sha512",
     "C:\\Users\\KAMEN RAIDER\\.nuget\\packages\\system.globalization\\4.3.0\\system.globalization.4.3.0.nupkg.sha512",
