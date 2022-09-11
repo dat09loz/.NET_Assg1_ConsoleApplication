@@ -35,13 +35,13 @@ namespace Assg1_ConsoleApplication
         public string EmailString()
         {
             return string.Format(
-                "<h2>Transaction Details</h2>" +
-                $"<p>Time: {time:dd/MM/yyyy H:mm tt}</p>" +
-                $"<p>Balance: {balance:0.00}</p>" +
-                $"<p>Credit: {credit:0.00}</p>" +
-                $"<p>Debit: {debit:0.00}</p>" + 
-                "<p>Description:</p>" +
-                $"<p>{desc}</p>"
+                "---------------------------------------------------------------" +
+                $"Time: {time:dd/MM/yyyy H:mm tt}" +
+                $"Balance: {balance:0.00}" +
+                $"Credit: {credit:0.00}" +
+                $"Debit: {debit:0.00}" + 
+                "Description:" +
+                $"{desc}<br><br>"
             );
         }
 
@@ -49,8 +49,8 @@ namespace Assg1_ConsoleApplication
         public string TextString()
         {
             return string.Format(
-                $"{time:dd/MM/yyyy H:mm tt}, {balance:0.00}, {credit:0.00}, {debit:0.00}/n" +
-                $"{desc}/n/n"
+                $"{time:dd/MM/yyyy H:mm tt}, {balance:0.00}, {credit:0.00}, {debit:0.00}\n" +
+                $"{desc}\n\n"
             );
         }
     }

@@ -52,17 +52,17 @@ namespace Assg1_ConsoleApplication
         //print login menu to the console
         private void OutputLoginMenu()
         {
-            Console.WriteLine("     __________________________________________________");
-            Console.WriteLine("    |                                                  |");
-            Console.WriteLine("    |     WELCOME TO SIMPLE BANK MANAGEMENT SYSTEM     |");
-            Console.WriteLine("    |                                                  |");
-            Console.WriteLine("    |__________________________________________________|");
-            Console.WriteLine("    |                                                  |");
-            Console.WriteLine("    |                      SIGN IN                     |");
-            Console.WriteLine("    |     Username:                                    |");
-            Console.WriteLine("    |     Password:                                    |");
-            Console.WriteLine("    |                                                  |");
-            Console.WriteLine("    |__________________________________________________|");
+            Console.WriteLine("     ______________________________________________________________");
+            Console.WriteLine("    |                                                              |");
+            Console.WriteLine("    |           WELCOME TO SIMPLE BANK MANAGEMENT SYSTEM           |");
+            Console.WriteLine("    |                                                              |");
+            Console.WriteLine("    |______________________________________________________________|");
+            Console.WriteLine("    |                                                              |");
+            Console.WriteLine("    |                            SIGN IN                           |");
+            Console.WriteLine("    |     Username:                                                |");
+            Console.WriteLine("    |     Password:                                                |");
+            Console.WriteLine("    |                                                              |");
+            Console.WriteLine("    |______________________________________________________________|");
         }
         
     }
