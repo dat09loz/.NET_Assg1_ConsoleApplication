@@ -26,3 +26,5 @@ D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\netcoreapp3.1\Assg1_ConsoleA
 D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\netcoreapp3.1\Assg1_ConsoleApplication.dll
 D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\netcoreapp3.1\Assg1_ConsoleApplication.pdb
 D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\netcoreapp3.1\Assg1_ConsoleApplication.genruntimeconfig.cache
+D:\Code Projects\Assg1_ConsoleApplication\bin\Debug\netcoreapp3.1\Microsoft.Office.Interop.Word.dll
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\netcoreapp3.1\Assg1_ConsoleApplication.csproj.CopyComplete
