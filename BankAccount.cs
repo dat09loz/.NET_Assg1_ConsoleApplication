@@ -81,7 +81,7 @@ namespace Assg1_ConsoleApplication
         {
 			balance += amount;
 			UpdateTransactionList(amount, "deposit"); //add a deposit transaction entry
-			UpdateFile(amount);
+			UpdateFile();
         }
 
 		//handle withdraw activities
@@ -91,7 +91,7 @@ namespace Assg1_ConsoleApplication
             {
 				balance -= amount;
 				UpdateTransactionList(amount, "withdraw"); //add a withdraw transaction entry
-				UpdateFile(amount);
+				UpdateFile();
             }
         }
 
@@ -167,7 +167,7 @@ namespace Assg1_ConsoleApplication
 		//update database
 
 		//handle <account id>.txt file update 
-		public void UpdateFile(double amount)
+		public void UpdateFile()
         {
 			//add all transactions into strBlock, then write it into file
 			//WriteAllText: create a file, write file and close it (overriten existed file)
