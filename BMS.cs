@@ -61,6 +61,15 @@ namespace Assg1_ConsoleApplication
                             case MenuOptions.CreateAccount:
                                 CreateAccount(ref c1, ref c2);
                                 break;
+                            case MenuOptions.SearchAccount:
+                                SearchAccount(ref c2);
+                                break;
+                            case MenuOptions.Deposit:
+                                Deposit(ref c2);
+                                break;
+                            case MenuOptions.Withdraw:
+                                Withdraw(ref c2);
+                                break;
                             default:
                                 break;
                         }
@@ -202,13 +211,13 @@ namespace Assg1_ConsoleApplication
                         CreateAccount(ref c1, ref c2);
                         break;
                     case ConsoleKey.D2: case ConsoleKey.NumPad2: //2
-                        //SearchAccount(ref c2);
+                        SearchAccount(ref c2);
                         break;
                     case ConsoleKey.D3: case ConsoleKey.NumPad3: //3
-                        //Deposit(ref c2);
+                        Deposit(ref c2);
                         break;
                     case ConsoleKey.D4: case ConsoleKey.NumPad4: //4
-                        //Withdraw(ref c2);
+                        Withdraw(ref c2);
                         break;
                     case ConsoleKey.D5: case ConsoleKey.NumPad5: //5
                         //AACStatement(ref c2);
@@ -281,7 +290,7 @@ namespace Assg1_ConsoleApplication
                             int id;
                             do //keep regenerating account id until it's unique
                             {
-                                id = new Random().Next(10000000, 99999999); //random id generator
+                                id = new Random().Next(100000, 99999999); //random id generator
                             } while (File.Exists($"{id}.txt"));
 
                             //create a new bankAccount object (int id, string fname, string lname, string email, string address, string phone, double balance)
@@ -340,6 +349,133 @@ namespace Assg1_ConsoleApplication
             Console.WriteLine("    |                                                              |");
             Console.WriteLine("    |______________________________________________________________|");
             Console.WriteLine();
+        }
+
+        //search accounts
+        public void SearchAccount(ref ConsoleKey c)
+        {
+            Console.Clear();
+            OutputOptionMenu(MenuOptions.SearchAccount); //output option menu for search an account
+
+            Console.SetCursorPosition(26, 8);
+            string id = Console.ReadLine();
+            Console.SetCursorPosition(4, 11);
+
+            if (AccountExists(id))
+            {
+                Account(Convert.ToInt32(id)).OutputAccDetails();
+                Console.Write("Press any key to return to menu.");
+                Console.ReadKey();
+                Console.WriteLine();
+                Console.Write(    "Returning to menu... ");
+                System.Threading.Thread.Sleep(1000);
+                Menu();
+            }
+            Console.WriteLine("Account not found!");
+            Console.Write("    Check another account? (y/n) ");
+            ReadChoice(ref c, ref c, MenuOptions.SearchAccount);
+        }
+
+        //check if account exists in the system
+        public bool AccountExists(string idStr)
+        {
+            //check if id valid, valid length and .txt file exists
+            bool validId = Int32.TryParse(idStr, out int id);
+            bool validIdLen = idStr.Length >= 6 && idStr.Length <= 8;
+            bool fileExists = File.Exists($"{id}.txt");
+
+            if (validId && validIdLen && fileExists)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        //return account by id, if not found return nothing
+        public BankAccount Account(int id)
+        {
+            foreach (BankAccount acc in accounts)
+            {
+                if (acc.HasId(id))
+                {
+                    return acc;
+                }
+            }
+            return null;
+        }
+
+        //deposit
+        public void Deposit(ref ConsoleKey c)
+        {
+            Console.Clear();
+            OutputOptionMenu(MenuOptions.Deposit);// output optionn menu for deposit
+
+            Console.SetCursorPosition(26, 8);
+            string idStr = Console.ReadLine();
+
+            if (AccountExists(idStr)) //check  if account exist before enter amount
+            {
+                Console.SetCursorPosition(4, 11);
+                Console.WriteLine("Account found! Enter the amount...");
+                Console.SetCursorPosition(20, 9);
+                string amountStr = Console.ReadLine();
+                
+
+                if (Double.TryParse(amountStr, out double amount)) //if the entered amount is valid
+                {
+                    Account(Convert.ToInt32(idStr)).Deposit(amount); //deposit to the specified account
+                    Console.SetCursorPosition(4, 12);
+                    Console.WriteLine("Deposit Successfull!");
+                    Console.Write("    Press any key to return to menu.");
+                    Console.ReadKey();
+                    Console.WriteLine();
+                    Console.WriteLine("    Returning to menu...");
+                    System.Threading.Thread.Sleep(1000);
+                    Menu();
+                }
+                else //amount not valid
+                {
+                    Console.SetCursorPosition(4, 12);
+                    Console.Write("Amount not valid! Retry? (y/n) ");
+                    ReadChoice(ref c, ref c, MenuOptions.Deposit);
+                }
+            }
+            else //if not, reset table
+            {
+                Console.SetCursorPosition(4, 11);
+                Console.WriteLine("Account Not Found!");
+                Console.Write("    Retry? (y/n) ");
+                ReadChoice(ref c, ref c, MenuOptions.Deposit);
+            }
+        }
+
+        //withdraw
+        private void Withdraw(ref ConsoleKey c)
+        {
+
+
+        }
+
+        //dymanic menu to handle different options
+        public void OutputOptionMenu(MenuOptions op)
+        {
+            Console.WriteLine("     ________________________________________________________");
+            Console.WriteLine("    |                                                        |");
+            if (op == MenuOptions.SearchAccount)
+            Console.WriteLine("    |                    SEARCH AN ACCOUNT                   |");
+            if (op == MenuOptions.Deposit)
+            Console.WriteLine("    |                         DEPOSIT                        |");
+
+            Console.WriteLine("    |                                                        |");
+            Console.WriteLine("    |________________________________________________________|");
+            Console.WriteLine("    |                                                        |");
+            Console.WriteLine("    |                   ENTER THE DETAILS                    |");
+            Console.WriteLine("    |                                                        |");
+            Console.WriteLine("    |     Account Number:                                    |");
+            if (op == MenuOptions.Deposit && op == MenuOptions.Withdraw)
+            Console.WriteLine("    |     Amount: $                                          |");
+            Console.WriteLine("    |________________________________________________________|");
         }
     }
 }

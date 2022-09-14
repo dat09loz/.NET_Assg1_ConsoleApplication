@@ -87,7 +87,7 @@ namespace Assg1_ConsoleApplication
 		//handle withdraw activities
 		public void Withdraw(double amount)
         {
-			if(SufficientFund(amount)) // if the balance is sufficient
+			if (SufficientFund(amount)) // if the balance is sufficient
             {
 				balance -= amount;
 				UpdateTransactionList(amount, "withdraw"); //add a withdraw transaction entry
@@ -130,7 +130,7 @@ namespace Assg1_ConsoleApplication
 						"Simple Banking Co."
 					);
                 }
-				if (option == "transactions") //option to send the details of a new transaction
+				if (option == "Transactions") //option to send the details of a new transaction
                 {
 					//convert each transaction item into a string format
 					string strBlock = "";
@@ -158,8 +158,6 @@ namespace Assg1_ConsoleApplication
             {
 				return false;
 			}
-
-			
         }
 
 		//end activities
@@ -206,7 +204,7 @@ namespace Assg1_ConsoleApplication
 
 		//validators
 
-		//check if the id is valid
+		//check if the id exists
 		public bool HasId(int id)
 		{
 			return this.id == id;
