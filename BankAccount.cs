@@ -130,7 +130,7 @@ namespace Assg1_ConsoleApplication
 						"Simple Banking Co."
 					);
                 }
-				if (option == "Transactions") //option to send the details of a new transaction
+				if (option == "Statement") //option to send the account statement
                 {
 					//convert each transaction item into a string format
 					string strBlock = "";

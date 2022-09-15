@@ -18,15 +18,15 @@ namespace Assg1_ConsoleApplication
         // this enum will handle menu option input (if the user press option 4, withdraw method will be called etc.)
         public enum MenuOptions 
         {
-            Login,                  //0
-            CreateAccount,          //1
-            SearchAccount,          //2
-            Deposit,                //3 
-            Withdraw,               //4
-            ACStatement1,           //5
-            ACStatement2,           //6
-            DeleteAccount1,         //7
-            DeleteAccount2,         //8
+            Login,                      //0
+            CreateAccount,              //1
+            SearchAccount,              //2
+            Deposit,                    //3 
+            Withdraw,                   //4
+            ACStatement,                //5
+            ACStatementEmail,           //6
+            DeleteAccount,              //7
+            DeleteAccountTrue          //8
         }
 
         //main class
@@ -43,7 +43,7 @@ namespace Assg1_ConsoleApplication
         {
             /* logic behind 2 consolekey variables:
              * - c1: for createAccount method. If yes, create a new account (confirm the inputted data is correct). If no, call the method again (redo the process)
-             * - c2: for all other methods. If yes, evaluate the MenuOptions (keep the program running). If no, not evaluate the MenuOptions (exit the program/function)
+             * - c2: for all other methods. If yes, evaluate the MenuOptions (keep the program running). If no, not evaluate the MenuOptions (exit the program)
             */
             //while c2 == ConsoleKey.Y, evaluate menu options
             do
@@ -56,7 +56,7 @@ namespace Assg1_ConsoleApplication
                         switch (op)
                         {
                             case MenuOptions.Login:
-                                Login(ref c2); //Y
+                                Login(ref c2); 
                                 break;
                             case MenuOptions.CreateAccount:
                                 CreateAccount(ref c1, ref c2);
@@ -69,6 +69,21 @@ namespace Assg1_ConsoleApplication
                                 break;
                             case MenuOptions.Withdraw:
                                 Withdraw(ref c2);
+                                break;
+                            case MenuOptions.ACStatement:
+                                ACStatement(ref c2);
+                                break;
+                            case MenuOptions.ACStatementEmail: //if user wants to send email
+                                Account(AccId).SendEmail("Statement");
+                                Console.WriteLine("\n\n    Email sent successfully!...");
+                                break;
+                            case MenuOptions.DeleteAccount:
+                                DeleteAccount(ref c2);
+                                break;
+                            case MenuOptions.DeleteAccountTrue: //if user wants to delete the account
+                                accounts.Remove(Account(AccId)); //remove account in the List 
+                                File.Delete($"{AccId}.txt"); //remove .txt file
+                                Console.WriteLine("\n\n    Account Deleted!...");
                                 break;
                             default:
                                 break;
@@ -220,10 +235,10 @@ namespace Assg1_ConsoleApplication
                         Withdraw(ref c2);
                         break;
                     case ConsoleKey.D5: case ConsoleKey.NumPad5: //5
-                        //AACStatement(ref c2);
+                        ACStatement(ref c2);
                         break;
                     case ConsoleKey.D6: case ConsoleKey.NumPad6: //6
-                        //DeleteAccount(ref c2);
+                        DeleteAccount(ref c2);
                         break;
                     default:
                         invalidInput = true;
@@ -315,7 +330,7 @@ namespace Assg1_ConsoleApplication
                         }
                         else //if not a valid phone number
                         {
-                            Console.Write("    Invalid phone number. Retry? (y/n)");
+                            Console.Write("    Invalid phone number. Retry? (y/n) ");
                             ReadChoice(ref c1, ref c2, MenuOptions.CreateAccount);
                         }
                         break;
@@ -429,8 +444,7 @@ namespace Assg1_ConsoleApplication
                     Console.WriteLine("Deposit Successfull!");
                     Console.Write("    Press any key to return to menu.");
                     Console.ReadKey();
-                    Console.WriteLine();
-                    Console.WriteLine("    Returning to menu...");
+                    Console.WriteLine("\n    Returning to menu...");
                     System.Threading.Thread.Sleep(1000);
                     Menu();
                 }
@@ -453,8 +467,103 @@ namespace Assg1_ConsoleApplication
         //withdraw
         private void Withdraw(ref ConsoleKey c)
         {
+            Console.Clear();
+            OutputOptionMenu(MenuOptions.Withdraw); //output withdraw window
 
+            Console.SetCursorPosition(26, 8);
+            string idStr = Console.ReadLine();
 
+            if(AccountExists(idStr)) //if account exists in the system
+            {
+                int id = Convert.ToInt32(idStr);
+                Console.SetCursorPosition(4, 11);
+                Console.WriteLine("Account found! Enter the amount...");
+                Console.SetCursorPosition(20, 9);
+                string amountStr = Console.ReadLine();
+                Console.SetCursorPosition(4, 12);
+
+                if (Double.TryParse(amountStr, out double amount)) {//if amount is valid
+                    if (Account(id).SufficientFund(amount))// if the account have sufficient fund to withdraw the amount
+                    {
+                        Account(id).Withdraw(amount);
+                        Console.WriteLine("Withdraw Successful!");
+                        Console.WriteLine("\n    Press any key to return to Main Menu...");
+                        Console.ReadKey();
+                        Console.Write("\n    Return to menu...");
+                        System.Threading.Thread.Sleep(1000);
+                        Menu();
+                    }
+                    else // insufficient funds
+                    {
+                        Console.WriteLine("Insufficient Funds. Retry? (y/n) ");
+                        ReadChoice(ref c, ref c, MenuOptions.Withdraw);
+                    }
+                }
+                else //invalid amount
+                {
+                    Console.WriteLine("Invalid Amount. Retry? (y/n) ");
+                    ReadChoice(ref c, ref c, MenuOptions.Withdraw);
+                }
+            }
+            else
+            {
+                Console.SetCursorPosition(4, 11);
+                Console.WriteLine("Account Not Found!");
+                Console.Write("    Retry? (y/n) ");
+                ReadChoice(ref c, ref c, MenuOptions.Withdraw);
+            }
+        }
+
+        //view statement
+        public void ACStatement(ref ConsoleKey c)
+        {
+            Console.Clear();
+            OutputOptionMenu(MenuOptions.ACStatement);
+
+            Console.SetCursorPosition(26, 8);
+            string idStr = Console.ReadLine();
+            Console.SetCursorPosition(4, 11);
+
+            if (AccountExists(idStr)) //if account exists
+            {
+                int id = Convert.ToInt32(idStr);
+                Account(id).OutputAccDetails(); //output account details
+                Console.Write("Email Statement? (y/n) ");
+                ReadChoice(ref c, ref c, MenuOptions.ACStatementEmail, id);
+                Console.Write("    Press any key to return to menu.");
+                Console.ReadKey();
+                Console.WriteLine("\n\n    Returning to menu...");
+                System.Threading.Thread.Sleep(1000);
+            }
+            else //account does not exists
+            {
+                Console.Write("Account not found/valid!. Retry? (y/n) ");
+                ReadChoice(ref c, ref c, MenuOptions.ACStatement);
+            }
+        }
+
+        //delete an account
+        public void DeleteAccount(ref ConsoleKey c)
+        {
+            Console.Clear();
+            OutputOptionMenu(MenuOptions.DeleteAccount);
+
+            Console.SetCursorPosition(26, 8);
+            string idStr = Console.ReadLine();
+            Console.SetCursorPosition(4, 11);
+
+            if (AccountExists(idStr)) //account existed
+            {
+                int id = Convert.ToInt32(idStr);
+                Account(id).OutputAccDetails(); //output account details
+                Console.Write("Delete? (y/n) ");
+                ReadChoice(ref c, ref c, MenuOptions.DeleteAccountTrue, id);
+            }
+            else //account does not exists
+            {
+                Console.Write("Account not found/valid!. Retry? (y/n) ");
+                ReadChoice(ref c, ref c, MenuOptions.DeleteAccount);
+            }
         }
 
         //dymanic menu to handle different options
@@ -466,7 +575,12 @@ namespace Assg1_ConsoleApplication
             Console.WriteLine("    |                    SEARCH AN ACCOUNT                   |");
             if (op == MenuOptions.Deposit)
             Console.WriteLine("    |                         DEPOSIT                        |");
-
+            if (op == MenuOptions.Withdraw)
+            Console.WriteLine("    |                        WITHDRAW                        |");
+            if (op == MenuOptions.ACStatement)
+            Console.WriteLine("    |                        STATEMENT                       |");
+            if (op == MenuOptions.DeleteAccount)
+            Console.WriteLine("    |                    DELETE AN ACCOUNT                   |");
             Console.WriteLine("    |                                                        |");
             Console.WriteLine("    |________________________________________________________|");
             Console.WriteLine("    |                                                        |");
