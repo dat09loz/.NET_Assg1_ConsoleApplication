@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OqyRjFgz6wHQdXrbdLIW8w7CAdtuMFWRvf0KrURfwe2W8RCeUukeWVwRhYCHGfKvi+yJtKxFPCcf2XVhnJGyVg==",
+  "dgSpecHash": "54jYEpIgHoZFqkMP40V14vlspJJj7JEoRVGBLQQ2yK3XY1WXud/zuf9CG0LvXsgBX56RohywsV/iOeFd4b9CsQ==",
   "success": true,
   "projectFilePath": "D:\\Code Projects\\Assg1_ConsoleApplication\\Assg1_ConsoleApplication.csproj",
   "expectedPackageFiles": [
@@ -18,7 +18,11 @@
     "C:\\Users\\KAMEN RAIDER\\.nuget\\packages\\system.runtime.extensions\\4.3.0\\system.runtime.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\KAMEN RAIDER\\.nuget\\packages\\system.text.encoding\\4.3.0\\system.text.encoding.4.3.0.nupkg.sha512",
     "C:\\Users\\KAMEN RAIDER\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
-    "C:\\Users\\KAMEN RAIDER\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512"
+    "C:\\Users\\KAMEN RAIDER\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
+    "C:\\Users\\KAMEN RAIDER\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.17\\microsoft.netcore.app.host.win-x64.5.0.17.nupkg.sha512",
+    "C:\\Users\\KAMEN RAIDER\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\5.0.0\\microsoft.aspnetcore.app.ref.5.0.0.nupkg.sha512",
+    "C:\\Users\\KAMEN RAIDER\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\5.0.0\\microsoft.windowsdesktop.app.ref.5.0.0.nupkg.sha512",
+    "C:\\Users\\KAMEN RAIDER\\.nuget\\packages\\microsoft.netcore.app.ref\\5.0.0\\microsoft.netcore.app.ref.5.0.0.nupkg.sha512"
   ],
   "logs": []
 }

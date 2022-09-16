@@ -28,7 +28,6 @@ namespace Assg1_ConsoleApplication
 			this.balance = balance;
 			transactions = new List<Transaction>();
 			// DateTime time, double credit, double debit, double balance, string desc
-			transactions.Add(new Transaction(DateTime.Now, 0.0, 0.0, balance, "Account Created."));
 		}
 
 
@@ -43,33 +42,58 @@ namespace Assg1_ConsoleApplication
 			Console.WriteLine("    |                                                              |");
 			Console.WriteLine("    |______________________________________________________________|");
 			Console.WriteLine("    |                                                              |");
-			Console.WriteLine($"    |     Account Number: {id}".PadRight(41, ' ') + "|");
-			Console.WriteLine($"    |     Account Balance: {balance}".PadRight(40, ' ') + "|");
-			Console.WriteLine($"    |     First Name: {fname}".PadRight(45, ' ') + "|");
-			Console.WriteLine($"    |     Last Name: {lname}".PadRight(46, ' ') + "|");
-			Console.WriteLine($"    |     Address: {address}".PadRight(48, ' ') + "|");
-			Console.WriteLine($"    |     Phone: {phone}".PadRight(50, ' ') + "|");
-			Console.WriteLine($"    |     Email: {email}".PadRight(50, ' ') + "|");
+			Console.WriteLine($"    |     Account Number: {id}".PadRight(67, ' ') + "|");
+			Console.WriteLine($"    |     Account Balance: {balance}".PadRight(67, ' ') + "|");
+			Console.WriteLine($"    |     First Name: {fname}".PadRight(67, ' ') + "|");
+			Console.WriteLine($"    |     Last Name: {lname}".PadRight(67, ' ') + "|");
+			Console.WriteLine($"    |     Address: {address}".PadRight(67, ' ') + "|");
+			Console.WriteLine($"    |     Phone: {phone}".PadRight(67, ' ') + "|");
+			Console.WriteLine($"    |     Email: {email}".PadRight(67, ' ') + "|");
+			Console.WriteLine("    |______________________________________________________________|");
+		}
+
+		//output account statement form to the console
+		public void OutputAccStatement()
+		{ //insert each of the account properties into the console form with the appropriate padding
+			Console.WriteLine("     ______________________________________________________________");
+			Console.WriteLine("    |                                                              |");
+			Console.WriteLine("    |                        ACCOUNT DETAILS                       |");
 			Console.WriteLine("    |                                                              |");
 			Console.WriteLine("    |______________________________________________________________|");
+			Console.WriteLine("    |     Account Statement                                        |");
+			Console.WriteLine("    |                                                              |");
+			Console.WriteLine($"    |     Account Number: {id}".PadRight(67, ' ') + "|");
+			Console.WriteLine($"    |     Account Balance: {balance}".PadRight(67, ' ') + "|");
+			Console.WriteLine($"    |     First Name: {fname}".PadRight(67, ' ') + "|");
+			Console.WriteLine($"    |     Last Name: {lname}".PadRight(67, ' ') + "|");
+			Console.WriteLine($"    |     Address: {address}".PadRight(67, ' ') + "|");
+			Console.WriteLine($"    |     Phone: {phone}".PadRight(67, ' ') + "|");
+			Console.WriteLine($"    |     Email: {email}".PadRight(67, ' ') + "|");
+			Console.WriteLine("    |______________________________________________________________|");
+			Console.WriteLine("\n    Transaction History:\n");
+			OutputTransactions();
 		}
 
 		//output transaction list/history to the console (table style)
 		public void OutputTransactions()
-        {
-			Console.WriteLine(// table header
-				"   Date&Time".PadRight(25, ' ') + 
-				"Credit".PadRight(15, ' ') +
-				"Debit".PadRight(15, ' ') +
-				"Balance".PadRight(15, ' ') +
-				"Description".PadRight(15, ' ')
-			);
-			Console.WriteLine("   ".PadRight(90, '-')); //table grid
-			foreach (Transaction tr in transactions)
+		{
+			Console.WriteLine("    |      Date & Time      |      Balance      |      Credit      |      Debit      |      Description      |");
+			Console.WriteLine("    ".PadRight(111, '-') + "\n"); //table grid
+			if (transactions.Count > 5)
+			{ 
+				foreach (Transaction tr in transactions) //if the transaction list is <5, output all
+				{
+					Console.WriteLine("    " + tr); //Transaction.ToString method 
+				}
+			}
+			else
             {
-				Console.WriteLine(" " + tr); //Transaction.ToString method 
-            }
-			Console.WriteLine(); //new line
+				for (int i = transactions.Count - 1; i >= 0; --i) //if >=5, output the last 5 transactions
+                {
+					Transaction tr = transactions[i];
+					Console.WriteLine("    " + tr); 
+				}
+			}
         }
 
 		//end console 
@@ -116,7 +140,7 @@ namespace Assg1_ConsoleApplication
 					mail.Subject = "Welcome to Simple Banking"; //mail subject
 					mail.Body = string.Format(
 						$"Dear {fname},<br><br>" +
-						"We are glad to have you on board! Here is your account details:<br>" +
+						"We are glad to have you on board! Here is your account details:<br><br>" +
 						
 						$"Account ID: {id}<br>" +
 						$"First Name: {fname}<br>" +
@@ -140,15 +164,23 @@ namespace Assg1_ConsoleApplication
                     }
 					mail.Subject = "Your Account Statement";
 					mail.Body = string.Format(
-						$"Dear, {fname}<br>",
+						$"Dear, {fname}<br>" +
 						$"Here is your account statement:<br><br><br>" +
 
+						$"Account ID: {id}<br>" +
+						$"First Name: {fname}<br>" +
+						$"Last Name: {lname}<br>" +
+						$"Address: {address}<br>" +
+						$"Phone: {phone}<br>" +
+						$"Email: {email}<br><br>" +
+
+						$"Transaction History<br>" +
 						$"{strBlock}<br><br><br>" +
 						$"End of Statement.<br><br>" +
 
 						"Regards,<br>" +
 						"Simple Banking Co."
-					);
+					);;
                 }
 
 				client.Send(mail); //send the mail
@@ -177,11 +209,7 @@ namespace Assg1_ConsoleApplication
 			File.WriteAllText(
 				string.Format($"{id}.txt"), //filename
 				string.Format(
-					$"{balance}\n" + 
-					$"{fname}, {lname}\n" +
-					$"{address}\n" +
-					$"{phone}\n" +
-					$"{email}\n\n"+
+					$"{fname}\n{lname}\n{email}\n{address}\n{phone}\n{balance}\n\n" + //acc details
 					$"{strBlock}" //transaction list
 				)
 			);	
@@ -198,6 +226,18 @@ namespace Assg1_ConsoleApplication
 			{
 				transactions.Add(new Transaction(DateTime.Now, 0, amount, balance, "Withdraw"));
 			}
+        }
+
+		//handle readding transaction list from the resurrected account
+		public void ReAddTransactionList()
+        {
+			string[] trArr = File.ReadAllLines($"{id}.txt").Skip(7).ToArray(); //skip the account details section
+			foreach (string tr in trArr)
+            {
+				//split data from each transaction format: $"{time:dd/MM/yyyy H:mm tt}, {credit:0.00}, {debit:0.00}, {balance:0.00}, {desc}"
+				string[] trInfo = tr.Split(",", StringSplitOptions.RemoveEmptyEntries); //separate by comma, remove empty string before adding to the arr
+				transactions.Add(new Transaction(Convert.ToDateTime(trInfo[0]), Convert.ToDouble(trInfo[1]), Convert.ToDouble(trInfo[2]), Convert.ToDouble(trInfo[3]), trInfo[4]));
+            }
         }
 
 		//end update database

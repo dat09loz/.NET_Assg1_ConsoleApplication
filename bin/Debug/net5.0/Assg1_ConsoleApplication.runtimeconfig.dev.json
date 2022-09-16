@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\KAMEN RAIDER\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\KAMEN RAIDER\\.nuget\\packages"
+    ]
+  }
+}

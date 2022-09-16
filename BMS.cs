@@ -3,6 +3,7 @@
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
+using System.Net.Mail;
 
 namespace Assg1_ConsoleApplication
 {
@@ -43,7 +44,7 @@ namespace Assg1_ConsoleApplication
         {
             /* logic behind 2 consolekey variables:
              * - c1: for createAccount method. If yes, create a new account (confirm the inputted data is correct). If no, call the method again (redo the process)
-             * - c2: for all other methods. If yes, evaluate the MenuOptions (keep the program running). If no, not evaluate the MenuOptions (exit the program)
+             * - c2: for all other methods. If yes, evaluate the MenuOptions (keep the program running). If no, not evaluate the MenuOptions (exit the function/program)
             */
             //while c2 == ConsoleKey.Y, evaluate menu options
             do
@@ -56,31 +57,40 @@ namespace Assg1_ConsoleApplication
                         switch (op)
                         {
                             case MenuOptions.Login:
-                                Login(ref c2); 
+                                Login(ref c2);
+                                c2 = ConsoleKey.N;
                                 break;
                             case MenuOptions.CreateAccount:
                                 CreateAccount(ref c1, ref c2);
+                                c2 = ConsoleKey.N;
                                 break;
                             case MenuOptions.SearchAccount:
                                 SearchAccount(ref c2);
+                                c2 = ConsoleKey.N;
                                 break;
                             case MenuOptions.Deposit:
                                 Deposit(ref c2);
+                                c2 = ConsoleKey.N;
                                 break;
                             case MenuOptions.Withdraw:
                                 Withdraw(ref c2);
+                                c2 = ConsoleKey.N;
                                 break;
                             case MenuOptions.ACStatement:
                                 ACStatement(ref c2);
+                                c2 = ConsoleKey.N;
                                 break;
                             case MenuOptions.ACStatementEmail: //if user wants to send email
+                                c2 = ConsoleKey.N;
                                 Account(AccId).SendEmail("Statement");
                                 Console.WriteLine("\n\n    Email sent successfully!...");
                                 break;
                             case MenuOptions.DeleteAccount:
                                 DeleteAccount(ref c2);
+                                c2 = ConsoleKey.N;
                                 break;
                             case MenuOptions.DeleteAccountTrue: //if user wants to delete the account
+                                c2 = ConsoleKey.N;
                                 accounts.Remove(Account(AccId)); //remove account in the List 
                                 File.Delete($"{AccId}.txt"); //remove .txt file
                                 Console.WriteLine("\n\n    Account Deleted!...");
@@ -101,7 +111,7 @@ namespace Assg1_ConsoleApplication
         //choice methods (0-9)
 
         //login
-        private void Login(ref ConsoleKey c2)
+        private void Login(ref ConsoleKey c)
         {
             //clear the console, start the application
             //print out the menu view (UI)
@@ -150,8 +160,8 @@ namespace Assg1_ConsoleApplication
                         if (username == login[0] && password == login[1])
                         {
                             success = true;
-                            c2 = ConsoleKey.N;
-                            Console.Write("Login Successful. Please wait...");
+                            c = ConsoleKey.N;
+                            Console.Write("Valid credentail! Please wait...");
                             System.Threading.Thread.Sleep(1000);
                             Menu();
                             break;
@@ -159,20 +169,20 @@ namespace Assg1_ConsoleApplication
                     }
                     if (!success) //if login unsuccessful
                     {
-                        Console.Write(" Incorrect Credential. Try Again? (y/n) ");
-                        ReadChoice(ref c2, ref c2, MenuOptions.Login);
+                        Console.Write("Incorrect Credential. Try Again? (y/n) ");
+                        ReadChoice(ref c, ref c, MenuOptions.Login);
                     }
                 }
                 catch (IndexOutOfRangeException)
                 {
-                    c2 = ConsoleKey.N; //end program
+                    c = ConsoleKey.N; //end program
                     Console.Write("Error: Login credential in invalid format. Press any key to exit...");
                     Console.ReadKey();
                 }
             }
             else //login.txt does not exist
             {
-                c2 = ConsoleKey.N;
+                c = ConsoleKey.N;
                 Console.Write("Error: login.txt not found. Press any key to exit...");
                 Console.ReadKey();
             }  
@@ -281,15 +291,15 @@ namespace Assg1_ConsoleApplication
             Console.Clear();
             OutputCreateAccountForm();
             // read user input
-            Console.SetCursorPosition(21, 8);
+            Console.SetCursorPosition(22, 8);
             string fname = Console.ReadLine().Trim(' ');
-            Console.SetCursorPosition(20, 9);
+            Console.SetCursorPosition(21, 9);
             string lname = Console.ReadLine().Trim(' ');
-            Console.SetCursorPosition(18, 10);
+            Console.SetCursorPosition(19, 10);
             string address = Console.ReadLine().Trim(' ');
-            Console.SetCursorPosition(16, 11);
+            Console.SetCursorPosition(17, 11);
             string phone = Console.ReadLine().Trim(' ');
-            Console.SetCursorPosition(16, 12);
+            Console.SetCursorPosition(17, 12);
             string email = Console.ReadLine().Trim(' ');
             Console.SetCursorPosition(4, 17);
             Console.Write("Is the information correct? (y/n) ");
@@ -311,27 +321,29 @@ namespace Assg1_ConsoleApplication
                             //create a new bankAccount object (int id, string fname, string lname, string email, string address, string phone, double balance)
                             BankAccount bankAccount = new BankAccount(id, fname, lname, email, address, phone, 0.0);
 
-                            if (bankAccount.SendEmail("AccInfo")) //option to send account info
+                            if (IsValidEmail(email) && bankAccount.SendEmail("AccInfo")) //option to send account info
                             {
                                 // if send successfully:
                                 Console.WriteLine("    Account Created! Details will be provided via email.");
                                 Console.WriteLine($"    Account number is: {id}");
                                 accounts.Add(bankAccount);
                                 bankAccount.UpdateFile(); //create a new {id}.txt file
-                                Console.Write("Returning to menu... ");
-                                System.Threading.Thread.Sleep(1000);
+                                Console.Write("\nReturning to menu... ");
+                                System.Threading.Thread.Sleep(3000);
                             }
                             else //if sendEmail unsuccessful => invalid/incorrect email address
                             {
                                 accounts.RemoveAt(accounts.Count - 1); //remove newly added account in accounts list
                                 Console.Write("    Invalid/Incorrect email adddress. Retry? (y/n) ");
                                 ReadChoice(ref c1, ref c2, MenuOptions.CreateAccount);
+                                return;
                             }
                         }
                         else //if not a valid phone number
                         {
                             Console.Write("    Invalid phone number. Retry? (y/n) ");
                             ReadChoice(ref c1, ref c2, MenuOptions.CreateAccount);
+                            return;
                         }
                         break;
                     case ConsoleKey.N: //if the info is incorrect
@@ -343,6 +355,20 @@ namespace Assg1_ConsoleApplication
                 }
             } while (c1 != ConsoleKey.Y && c2 != ConsoleKey.N);
 
+        }
+
+        //check if the inputted email is valid
+        public bool IsValidEmail (string email)
+        {
+            try
+            {
+                MailAddress mail = new MailAddress(email);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         //create a new account (view)
@@ -374,21 +400,20 @@ namespace Assg1_ConsoleApplication
 
             Console.SetCursorPosition(26, 8);
             string id = Console.ReadLine();
-            Console.SetCursorPosition(4, 11);
 
             if (AccountExists(id))
             {
+                Console.WriteLine("\n\n");
                 Account(Convert.ToInt32(id)).OutputAccDetails();
-                Console.Write("Press any key to return to menu.");
-                Console.ReadKey();
-                Console.WriteLine();
-                Console.Write(    "Returning to menu... ");
-                System.Threading.Thread.Sleep(1000);
-                Menu();
+                Console.Write("\n    Check another account? (y/n) ");
+                ReadChoice(ref c, ref c, MenuOptions.SearchAccount);
+                return; //exit from the function
             }
+            Console.SetCursorPosition(4, 11);
             Console.WriteLine("Account not found!");
-            Console.Write("    Check another account? (y/n) ");
+            Console.Write("    Retry? (y/n) ");
             ReadChoice(ref c, ref c, MenuOptions.SearchAccount);
+            return;
         }
 
         //check if account exists in the system
@@ -401,6 +426,20 @@ namespace Assg1_ConsoleApplication
 
             if (validId && validIdLen && fileExists)
             {
+                if (Account(id) == null) //if the account details file exists, but it's not in the system (details remains after last console session)
+                {
+                    string[] details = File.ReadAllLines($"{id}.txt").Take(6).ToArray(); //read the first 6 lines (account details)
+                    try
+                    {
+                        BankAccount acc = new BankAccount(id, details[0], details[1], details[2], details[3], details[4], Convert.ToDouble(details[5])); //add existed account to system
+                        accounts.Add(acc);
+                        acc.ReAddTransactionList(); //readd transaction history to this account
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                }
                 return true;
             }
 
@@ -431,36 +470,36 @@ namespace Assg1_ConsoleApplication
 
             if (AccountExists(idStr)) //check  if account exist before enter amount
             {
-                Console.SetCursorPosition(4, 11);
+                Console.SetCursorPosition(4, 12);
                 Console.WriteLine("Account found! Enter the amount...");
                 Console.SetCursorPosition(20, 9);
                 string amountStr = Console.ReadLine();
                 
 
-                if (Double.TryParse(amountStr, out double amount)) //if the entered amount is valid
+                if (Double.TryParse(amountStr, out double amount) && amount > 0) //if the entered amount is valid
                 {
                     Account(Convert.ToInt32(idStr)).Deposit(amount); //deposit to the specified account
-                    Console.SetCursorPosition(4, 12);
-                    Console.WriteLine("Deposit Successfull!");
-                    Console.Write("    Press any key to return to menu.");
-                    Console.ReadKey();
-                    Console.WriteLine("\n    Returning to menu...");
-                    System.Threading.Thread.Sleep(1000);
-                    Menu();
+                    Console.SetCursorPosition(4, 14);
+                    Console.WriteLine("Deposit Successful!");
+                    Console.Write("\n    Deposit to another account? (y/n) ");
+                    ReadChoice(ref c, ref c, MenuOptions.Deposit);
+                    return; //exit from the function
                 }
                 else //amount not valid
                 {
-                    Console.SetCursorPosition(4, 12);
-                    Console.Write("Amount not valid! Retry? (y/n) ");
+                    Console.SetCursorPosition(4, 13);
+                    Console.Write("\n    Amount not valid! Retry? (y/n) ");
                     ReadChoice(ref c, ref c, MenuOptions.Deposit);
+                    return;
                 }
             }
             else //if not, reset table
             {
-                Console.SetCursorPosition(4, 11);
+                Console.SetCursorPosition(4, 12);
                 Console.WriteLine("Account Not Found!");
                 Console.Write("    Retry? (y/n) ");
                 ReadChoice(ref c, ref c, MenuOptions.Deposit);
+                return;
             }
         }
 
@@ -476,41 +515,42 @@ namespace Assg1_ConsoleApplication
             if(AccountExists(idStr)) //if account exists in the system
             {
                 int id = Convert.ToInt32(idStr);
-                Console.SetCursorPosition(4, 11);
+                Console.SetCursorPosition(4, 12);
                 Console.WriteLine("Account found! Enter the amount...");
                 Console.SetCursorPosition(20, 9);
                 string amountStr = Console.ReadLine();
-                Console.SetCursorPosition(4, 12);
+                Console.SetCursorPosition(4, 14);
 
-                if (Double.TryParse(amountStr, out double amount)) {//if amount is valid
+                if (Double.TryParse(amountStr, out double amount) && amount > 0) {//if amount is valid
                     if (Account(id).SufficientFund(amount))// if the account have sufficient fund to withdraw the amount
                     {
                         Account(id).Withdraw(amount);
                         Console.WriteLine("Withdraw Successful!");
-                        Console.WriteLine("\n    Press any key to return to Main Menu...");
-                        Console.ReadKey();
-                        Console.Write("\n    Return to menu...");
-                        System.Threading.Thread.Sleep(1000);
-                        Menu();
+                        Console.Write("\n    Withdraw from another account? (y/n) ");
+                        ReadChoice(ref c, ref c, MenuOptions.Withdraw);
+                        return; //exit from the function 
                     }
                     else // insufficient funds
                     {
-                        Console.WriteLine("Insufficient Funds. Retry? (y/n) ");
+                        Console.Write("Insufficient Funds. Retry? (y/n) ");
                         ReadChoice(ref c, ref c, MenuOptions.Withdraw);
+                        return;
                     }
                 }
                 else //invalid amount
                 {
-                    Console.WriteLine("Invalid Amount. Retry? (y/n) ");
+                    Console.Write("Amount not valid! Retry? (y/n) ");
                     ReadChoice(ref c, ref c, MenuOptions.Withdraw);
+                    return;
                 }
             }
             else
             {
-                Console.SetCursorPosition(4, 11);
+                Console.SetCursorPosition(4, 12);
                 Console.WriteLine("Account Not Found!");
                 Console.Write("    Retry? (y/n) ");
                 ReadChoice(ref c, ref c, MenuOptions.Withdraw);
+                return;
             }
         }
 
@@ -527,18 +567,20 @@ namespace Assg1_ConsoleApplication
             if (AccountExists(idStr)) //if account exists
             {
                 int id = Convert.ToInt32(idStr);
-                Account(id).OutputAccDetails(); //output account details
-                Console.Write("Email Statement? (y/n) ");
+                Console.WriteLine("Account found! The statement is displayed below...\n");
+
+                Account(id).OutputAccStatement(); //output account details
+                Console.Write("\n    Email Statement? (y/n) ");
                 ReadChoice(ref c, ref c, MenuOptions.ACStatementEmail, id);
-                Console.Write("    Press any key to return to menu.");
-                Console.ReadKey();
-                Console.WriteLine("\n\n    Returning to menu...");
-                System.Threading.Thread.Sleep(1000);
+                Console.Write("\n    View another account? (y/n) ");
+                ReadChoice(ref c, ref c, MenuOptions.ACStatement);
+                return; //exit from the function
             }
             else //account does not exists
             {
                 Console.Write("Account not found/valid!. Retry? (y/n) ");
                 ReadChoice(ref c, ref c, MenuOptions.ACStatement);
+                return;
             }
         }
 
@@ -550,21 +592,29 @@ namespace Assg1_ConsoleApplication
 
             Console.SetCursorPosition(26, 8);
             string idStr = Console.ReadLine();
-            Console.SetCursorPosition(4, 11);
+
 
             if (AccountExists(idStr)) //account existed
             {
                 int id = Convert.ToInt32(idStr);
+                Console.WriteLine("\n\n");
                 Account(id).OutputAccDetails(); //output account details
-                Console.Write("Delete? (y/n) ");
+                Console.Write("\n    Delete? (y/n) ");
                 ReadChoice(ref c, ref c, MenuOptions.DeleteAccountTrue, id);
+                Console.Write("\n    Delete another account? (y/n) ");
+                ReadChoice(ref c, ref c, MenuOptions.DeleteAccount);
+                return;
             }
             else //account does not exists
             {
+                Console.SetCursorPosition(4, 11);
                 Console.Write("Account not found/valid!. Retry? (y/n) ");
                 ReadChoice(ref c, ref c, MenuOptions.DeleteAccount);
+                return;
             }
         }
+
+        //end application functionalities
 
         //dymanic menu to handle different options
         public void OutputOptionMenu(MenuOptions op)
@@ -587,7 +637,7 @@ namespace Assg1_ConsoleApplication
             Console.WriteLine("    |                   ENTER THE DETAILS                    |");
             Console.WriteLine("    |                                                        |");
             Console.WriteLine("    |     Account Number:                                    |");
-            if (op == MenuOptions.Deposit && op == MenuOptions.Withdraw)
+            if (op == MenuOptions.Deposit || op == MenuOptions.Withdraw)
             Console.WriteLine("    |     Amount: $                                          |");
             Console.WriteLine("    |________________________________________________________|");
         }

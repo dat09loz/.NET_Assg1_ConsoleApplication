@@ -1,0 +1,17 @@
+D:\Code Projects\Assg1_ConsoleApplication\bin\Debug\net5.0\Assg1_ConsoleApplication.exe
+D:\Code Projects\Assg1_ConsoleApplication\bin\Debug\net5.0\Assg1_ConsoleApplication.deps.json
+D:\Code Projects\Assg1_ConsoleApplication\bin\Debug\net5.0\Assg1_ConsoleApplication.runtimeconfig.json
+D:\Code Projects\Assg1_ConsoleApplication\bin\Debug\net5.0\Assg1_ConsoleApplication.runtimeconfig.dev.json
+D:\Code Projects\Assg1_ConsoleApplication\bin\Debug\net5.0\Assg1_ConsoleApplication.dll
+D:\Code Projects\Assg1_ConsoleApplication\bin\Debug\net5.0\ref\Assg1_ConsoleApplication.dll
+D:\Code Projects\Assg1_ConsoleApplication\bin\Debug\net5.0\Assg1_ConsoleApplication.pdb
+D:\Code Projects\Assg1_ConsoleApplication\bin\Debug\net5.0\Microsoft.Office.Interop.Word.dll
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\net5.0\Assg1_ConsoleApplication.GeneratedMSBuildEditorConfig.editorconfig
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\net5.0\Assg1_ConsoleApplication.AssemblyInfoInputs.cache
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\net5.0\Assg1_ConsoleApplication.AssemblyInfo.cs
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\net5.0\Assg1_ConsoleApplication.csproj.CoreCompileInputs.cache
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\net5.0\Assg1_ConsoleApplication.csproj.CopyComplete
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\net5.0\Assg1_ConsoleApplication.dll
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\net5.0\ref\Assg1_ConsoleApplication.dll
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\net5.0\Assg1_ConsoleApplication.pdb
+D:\Code Projects\Assg1_ConsoleApplication\obj\Debug\net5.0\Assg1_ConsoleApplication.genruntimeconfig.cache
